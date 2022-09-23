@@ -1,9 +1,7 @@
 ---
 title: "HW1_zs2539"
-output:
-  html_document:
-    df_print: paged
-date: "`r Sys.Date()`"
+output: github_document
+chunk_output_type: console
 ---
 
 # Problem 1 Solution
