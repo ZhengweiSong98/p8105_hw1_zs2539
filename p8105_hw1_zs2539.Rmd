@@ -1,0 +1,80 @@
+---
+title: "HW1_zs2539"
+output:
+  html_document:
+    df_print: paged
+date: "`r Sys.Date()`"
+---
+
+# Problem 1 Solution
+
+The dataset penguins includes three specices located in three islands during 2007-2009, 344 samples in total, describing their bill depth and length, flipper length, body mass and sex.
+```{r setup, include=FALSE}
+data("penguins", package = "palmerpenguins")
+library(ggplot2)
+library(dplyr)
+```
+
+## The size of the dataset is as follows
+
+- Number of Rows
+```{r}
+nrow(penguins)
+```
+
+- Number of Columns
+```{r}
+ncol(penguins)
+```
+
+## Mean of flipper length in mm
+```{r}
+mean(penguins$flipper_length_mm,na.rm = T)
+```
+
+## Scatterplot of Flipper length-Bill Length by Species 
+```{r}
+FBplot1 = ggplot(data = penguins, mapping = aes(x = bill_length_mm, y = flipper_length_mm, colour = species)) + geom_point()
+FBplot1
+```
+
+## Export the scatterplot to the project directory
+```{r}
+ggsave("p8105_hw1_zs2539.pdf",FBplot1)
+```
+
+# Problem 2 Solution
+
+## Create the data frame comprised of a required random sample, with vectors including logical, character and factor.
+```{r}
+set.seed(1)
+
+example_df = tibble(
+  vec_numeric = rnorm(10),
+  vec_char = c("n1", "n2", "n3", "n4", "n5", "n6", "n7", "n8", "n9", "n10"),
+  vec_logical = vec_numeric > 0,
+  vec_factor = factor(c("High","Medium","High","Medium","High","Medium", "Medium", "Low", "Low", "Low"))
+)
+```
+
+## Now take the mean of each variable
+```{r}
+mean(example_df$vec_numeric,na.rm = T)
+mean(example_df$vec_char,na.rm = T)
+mean(example_df$vec_logical,na.rm = T)
+mean(example_df$vec_factor,na.rm = T)
+```
+
+In summary, character and factor vectors do not work, while numeric and logical vectors work.
+
+## Now convert those required vectors above to numeric
+```{r eval = FALSE}
+as.numeric(example_df$vec_logical)
+as.numeric(example_df$vec_char)
+as.numeric(example_df$vec_factor)
+```
+We can see that
+
+- The range of logical vector is {0,1} only, so the mean is 0.6 by computation above.
+- Factor vector is valued by natural number if converted, and cannot be computed directly before conversion.
+- Character vector converted to numeric is still NA.
